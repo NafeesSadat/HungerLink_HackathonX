@@ -1,15 +1,14 @@
 package com.example.hungerlink;
 
 public class UserInfoClass {
-    String name,email, phoneNo, blood, gender;
+    String name,email, phoneNo, address;
 
     public UserInfoClass() {}
 
-    public UserInfoClass(String name, String email, String phoneNo, String blood, String gender) {
+    public UserInfoClass(String name, String email, String phoneNo, String address) {
         this.name = name;
         this.phoneNo = phoneNo;
-        this.blood = blood;
-        this.gender = gender;
+        this.address = address;
         this.email = email;
     }
 
@@ -37,19 +36,12 @@ public class UserInfoClass {
         this.phoneNo = phoneNo;
     }
 
-    public String getBlood() {
-        return blood;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBlood(String blood) {
-        this.blood = blood;
+    public void setBlood(String address) {
+        this.address = address;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
 }
