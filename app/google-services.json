@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "15035147729",
+    "project_id": "hunger-link",
+    "storage_bucket": "hunger-link.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15035147729:android:079fe2c477a5d2fadcacf0",
+        "android_client_info": {
+          "package_name": "com.example.hungerlink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfHPXtQn278YmbTFoMD6W6qkKZ5UBkUAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

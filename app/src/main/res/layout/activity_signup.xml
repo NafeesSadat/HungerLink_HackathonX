@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DonorSignUpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="260sp">
+
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60sp"
+            android:layout_marginRight="60sp"
+            android:drawablePadding="15sp"
+            android:hint="Full Name"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:inputType="textPersonName"
+            />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60sp"
+            android:layout_marginRight="60sp"
+            android:layout_marginTop="10sp"
+            android:drawablePadding="15sp"
+            android:hint="Email"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:inputType="textEmailAddress" />
+
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginRight="60sp"
+            android:drawablePadding="15sp"
+            android:hint="Password"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:inputType="textPassword"
+            />
+
+        <EditText
+            android:id="@+id/confirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginRight="60sp"
+            android:drawablePadding="15sp"
+            android:hint="Confirm Password"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginRight="60sp"
+            android:drawablePadding="15sp"
+            android:hint="Phone Number"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/blood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginRight="60sp"
+            android:drawablePadding="15sp"
+            android:hint="Blood Type"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:inputType="text" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio"
+            android:layout_gravity="center"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:text="Male"
+                android:layout_marginRight="20sp"
+                android:checked="false"
+                android:textSize="20sp"
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:text="Female"
+                android:checked="false"
+                android:textSize="20sp"
+                android:textColor="@color/black" />
+
+        </RadioGroup>
+
+
+        <Button
+            android:id="@+id/signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5sp"
+            android:backgroundTint="#68B7F6"
+            android:text="SIGN UP"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:paddingVertical="10sp"
+            android:paddingHorizontal="50sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
