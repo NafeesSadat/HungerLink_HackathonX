@@ -160,6 +160,7 @@
 
 package com.example.hungerlink;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -309,11 +310,15 @@ public class DonorSignUpActivity extends AppCompatActivity {
                 Toast.makeText(DonorSignUpActivity.this, "The Email Address is already registered for an existing account!\nTry again with a different email!", Toast.LENGTH_LONG).show();
             }
         });
+        // Handle back press using OnBackPressedDispatcher
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Perform your custom action on back press, for example:
+                startActivity(new Intent(DonorSignUpActivity.this, LoginActivity.class));
+                finish(); // Close the current activity
+            }
+        });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(DonorSignUpActivity.this, LoginActivity.class));
-    }
 }
