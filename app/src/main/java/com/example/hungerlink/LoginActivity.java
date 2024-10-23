@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
             login = findViewById(R.id.login);
             email = findViewById(R.id.email);
             password = findViewById(R.id.password);
-//            signUp = findViewById(R.id.signUp);
+            signUp = findViewById(R.id.signupText);
 //            forgetPassword = findViewById(R.id.forgotPassword);
             auth = FirebaseAuth.getInstance();
         } catch (Exception e) {
@@ -48,10 +48,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        signUp.setOnClickListener(view -> {
-//            startActivity(new Intent(LoginActivity.this, DonorSignUpActivity.class));
-//            finish();
-//        });
+        signUp.setOnClickListener(view -> {
+            startActivity(new Intent(LoginActivity.this, DonorSignUpActivity.class));
+            finish();
+        });
 
 //        forgetPassword.setOnClickListener(view -> {
 //            try {

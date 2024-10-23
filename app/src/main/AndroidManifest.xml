@@ -13,6 +13,24 @@
         android:theme="@style/Theme.HungerLink"
         tools:targetApi="31">
         <activity
+            android:name=".ShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ContactUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NearbyNGOActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReceiveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DonateActivity"
+            android:exported="false" />
+        <activity
             android:name=".DonorSignUpActivity"
             android:exported="false" />
         <activity

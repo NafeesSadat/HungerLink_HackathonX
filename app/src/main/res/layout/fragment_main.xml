@@ -8,7 +8,8 @@
     android:background="@drawable/hometab"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainFragment">
+    tools:context=".MainActivity">
+<!--    tools:context=".MainFragment">-->>
 
 
     <GridLayout
