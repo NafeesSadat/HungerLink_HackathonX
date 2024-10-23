@@ -28,7 +28,7 @@ public class DonorSignUpActivity extends AppCompatActivity {
     private EditText address;
     private FirebaseAuth auth;
 
-    String txt_email, txt_password, txt_confirmPassword, txt_name, txt_phoneNo, txt_address, txt_gender;
+    String txt_email, txt_password, txt_confirmPassword, txt_name, txt_phoneNo, txt_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
