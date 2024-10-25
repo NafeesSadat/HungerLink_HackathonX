@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.com.fasterxml.jackson.core.JsonPointer.compile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
@@ -45,6 +47,16 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
     implementation(libs.activity)
+    implementation(libs.firebase.storage)
+    implementation(libs.glide)
+    annotationProcessor (libs.compiler)
+    implementation (libs.places)
+    implementation (libs.android.maps.utils)
+    implementation(libs.play.services.location)
+    implementation(libs.play.services.location.v2101)
+    implementation(libs.play.services.places)
+    implementation(libs.places.v310)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

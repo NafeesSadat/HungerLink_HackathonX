@@ -1,20 +1,30 @@
 [versions]
 agp = "8.7.1"
+androidMapsUtils = "2.2.4"
+glide = "4.12.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
-material = "1.10.0"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
 constraintlayout = "2.1.4"
-navigationFragment = "2.6.0"
-navigationUi = "2.6.0"
+navigationFragment = "2.8.3"
+navigationUi = "2.8.3"
 googleGmsGoogleServices = "4.4.2"
-firebaseAuth = "23.0.0"
+firebaseAuth = "23.1.0"
 firebaseDatabase = "21.0.0"
-activity = "1.8.0"
+activity = "1.9.3"
 firebaseStorage = "21.0.1"
+places = "4.0.0"
+placesVersion = "3.1.0"
+playServicesLocation = "21.3.0"
+playServicesLocationVersion = "21.0.1"
+playServicesPlaces = "17.1.0"
 
 [libraries]
+android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -27,6 +37,11 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+places = { module = "com.google.android.libraries.places:places", version.ref = "places" }
+places-v310 = { module = "com.google.android.libraries.places:places", version.ref = "placesVersion" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+play-services-location-v2101 = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
+play-services-places = { module = "com.google.android.gms:play-services-places", version.ref = "playServicesPlaces" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

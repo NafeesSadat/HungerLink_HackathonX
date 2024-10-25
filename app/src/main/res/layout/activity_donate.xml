@@ -1,159 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/dashboard"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".DonateActivity">
+    android:background="@drawable/dashboard">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:layout_margin="30dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/enter_your_namedonate"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editTextName_d"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_input"
-                android:hint="@string/your_name_donate_activity"
-                android:inputType="text"
-                android:maxLength="40"
-                android:minHeight="50dp"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textColorHint="#78909C" />
+                android:orientation="vertical"
+                android:padding="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/enter_your_food_items_donate"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <!-- Name input -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/enter_your_namedonate"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editTextFoodItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_input"
-                android:hint="@string/food_items"
-                android:inputType="text"
-                android:maxLength="60"
-                android:minHeight="50dp"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textColorHint="#78909C" />
+                <EditText
+                    android:id="@+id/editTextName_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="@string/your_name_donate_activity"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:minHeight="50dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#78909C" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/enter_your_phone_number_doante"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <!-- Food items input -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/enter_your_food_items_donate"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editTextPhoneNumber_d"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/custom_input"
-                android:hint="@string/phone_number"
-                android:inputType="phone"
-                android:maxLength="15"
-                android:minHeight="48dp"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textColorHint="#78909C" />
+                <EditText
+                    android:id="@+id/editTextFoodItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="@string/food_items"
+                    android:inputType="text"
+                    android:maxLength="60"
+                    android:minHeight="50dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#78909C" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Donation pickup address"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <!-- Phone number input -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/enter_your_phone_number_doante"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editTextaddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/custom_input"
-                android:hint="Address"
-                android:inputType="text"
-                android:maxLength="60"
-                android:minHeight="48dp"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textColorHint="#78909C" />
+                <EditText
+                    android:id="@+id/editTextPhoneNumber_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:maxLength="15"
+                    android:minHeight="48dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#78909C" />
 
-            <!-- New field for image upload -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Upload Donation Image"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <!-- Address input with suggestions -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Donation pickup address"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imagePreview"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_input"
-                android:contentDescription="Image Preview"
-                android:scaleType="centerCrop"
-                android:src="@drawable/baseline_file_upload_24" />
+                <AutoCompleteTextView
+                    android:id="@+id/editTextAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="Address"
+                    android:inputType="text"
+                    android:maxLength="60"
+                    android:minHeight="48dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#78909C" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonUploadImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/purple"
-                android:text="Choose Image"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                <!-- ListView for address suggestions -->
+                <ListView
+                    android:id="@+id/addressSuggestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="10dp"
+                    android:background="#FFFFFF"
+                    android:contentDescription="Address suggestions list" /> <!-- Added contentDescription -->
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonDonate"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/purple"
-                android:background="@drawable/rounded_button"
-                android:text="@string/donate_donate_activity"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+                <!-- Upload image section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Upload Donation Image"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imagePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/custom_input"
+                    android:contentDescription="Image Preview"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baseline_file_upload_24" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonUploadImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/purple"
+                    android:text="Choose Image"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <!-- Donate button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonDonate"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/purple"
+                    android:background="@drawable/rounded_button"
+                    android:text="@string/donate_donate_activity"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>
