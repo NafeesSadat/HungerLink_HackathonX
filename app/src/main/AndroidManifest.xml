@@ -35,6 +35,9 @@
             android:name=".ReceiveActivity"
             android:exported="false" />
         <activity
+            android:name=".ReceiveDetailActivity"
+            android:exported="false"/>
+        <activity
             android:name=".DonateActivity"
             android:exported="false" />
         <activity
