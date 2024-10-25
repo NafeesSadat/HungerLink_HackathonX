@@ -1,54 +1,104 @@
 package com.example.hungerlink;
 
-import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import com.example.hungerlink.databinding.ActivityReceiveBinding;
+import android.util.Log;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class ReceiveActivity extends AppCompatActivity {
+    private ArrayList<DonationInfo> donationList;
+    private DonationAdapter adapter;
+    private DatabaseReference databaseReference;
 
-    ActivityReceiveBinding binding;
-    ListAdapter listAdapter;
-    ArrayList<ListData> dataArrayList = new ArrayList<>();
-    ListData listData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityReceiveBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        int[] imageList = {R.drawable.pasta, R.drawable.maggi, R.drawable.cake, R.drawable.pancake, R.drawable.pizza, R.drawable.burger, R.drawable.fries};
-        int[] ingredientList = {R.string.pastaIngredients, R.string.maggiIngredients,R.string.cakeIngredients,R.string.pancakeIngredients,R.string.pizzaIngredients, R.string.burgerIngredients, R.string.friesIngredients};
-        int[] descList = {R.string.pastaDesc, R.string.maggieDesc, R.string.cakeDesc,R.string.pancakeDesc,R.string.pizzaDesc, R.string.burgerDesc, R.string.friesDesc};
-        String[] nameList = {"Pasta", "Maggi", "Cake", "Pancake", "Pizza","Burgers", "Fries"};
-        String[] timeList = {"30 mins", "2 mins", "45 mins","10 mins", "60 mins", "45 mins", "30 mins"};
-        for (int i = 0; i < imageList.length; i++){
-            listData = new ListData(nameList[i], timeList[i], ingredientList[i], descList[i], imageList[i]);
-            dataArrayList.add(listData);
-        }
-        listAdapter = new ListAdapter(ReceiveActivity.this, dataArrayList);
-        binding.listview.setAdapter(listAdapter);
-        binding.listview.setClickable(true);
-        binding.listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        setContentView(R.layout.activity_receive);
+
+        // Initialize views
+        ListView listView = findViewById(R.id.listview);
+
+        // Initialize list and adapter
+        donationList = new ArrayList<>();
+        adapter = new DonationAdapter(this, donationList);
+        listView.setAdapter(adapter);
+
+        // Initialize Firebase reference
+        databaseReference = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference().child("Donation Information");
+
+        // Load data from Firebase
+        fetchDonationData();
+
+        // Set item click listener for the ListView
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            DonationInfo selectedDonation = donationList.get(position);
+            // Log the donation ID to see its value
+            Log.d("ReceiveActivity", "Selected Donation ID: " + selectedDonation.getDonationId());
+
+            Intent intent1 = new Intent(ReceiveActivity.this, ReceiveDetailActivity.class);
+            intent1.putExtra("donationId", selectedDonation.getDonationId());
+
+            startActivity(intent1);
+        });
+    }
+
+    private void fetchDonationData() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(ReceiveActivity.this, ReceiveDetailActivity.class);
-                intent.putExtra("name", nameList[i]);
-                intent.putExtra("time", timeList[i]);
-                intent.putExtra("ingredients", ingredientList[i]);
-                intent.putExtra("desc", descList[i]);
-                intent.putExtra("image", imageList[i]);
-                startActivity(intent);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                donationList.clear(); // Clear list to avoid duplication
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot donationSnapshot : userSnapshot.getChildren()) {
+                        String donationId = donationSnapshot.getKey(); // Get the donation ID
+                        Log.d("ReceiveActivity", "Fetched Donation ID: " + donationId); // Log ID
+                        String name = donationSnapshot.child("name").getValue(String.class);
+                        String foodItems = donationSnapshot.child("foodItems").getValue(String.class);
+                        String phoneNumber = donationSnapshot.child("phoneNumber").getValue(String.class);
+                        String address = donationSnapshot.child("address").getValue(String.class);
+
+                        // Retrieve latitude and longitude as Double
+                        Double longitude = donationSnapshot.child("longitude").getValue(Double.class);
+                        Double latitude = donationSnapshot.child("latitude").getValue(Double.class);
+                        String imageUrl = donationSnapshot.child("imageUrl").getValue(String.class);
+
+                        // Log each field
+                        Log.d("ReceiveActivity", "Name: " + name + ", FoodItems: " + foodItems + ", Phone: " + phoneNumber + ", Address: " + address);
+
+                        LatLng latLng = null;
+                        if (latitude != null && longitude != null) {
+                            latLng = new LatLng(latitude, longitude);  // Create LatLng object
+                        }
+
+                        if (name != null && imageUrl != null) {
+                            DonationInfo donationInfo = new DonationInfo(donationId, name, foodItems, phoneNumber, address, latLng, imageUrl);
+                            donationList.add(donationInfo);
+                            Log.d("ReceiveActivity", "Added DonationInfo with ID: " + donationInfo.getDonationId());
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ReceiveActivity.this, "Failed to load donations", Toast.LENGTH_SHORT).show();
+                Log.e("ReceiveActivity", "Database error: ", error.toException());
             }
         });
     }
+
 }

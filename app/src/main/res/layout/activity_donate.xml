@@ -116,7 +116,7 @@
                     android:background="@drawable/custom_input"
                     android:hint="Address"
                     android:inputType="text"
-                    android:maxLength="60"
+                    android:maxLength="300"
                     android:minHeight="48dp"
                     android:padding="5dp"
                     android:textColor="@color/black"

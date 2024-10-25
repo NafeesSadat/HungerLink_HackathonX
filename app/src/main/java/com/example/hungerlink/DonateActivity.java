@@ -57,9 +57,11 @@ public class DonateActivity extends AppCompatActivity {
 
     // Declare the ActivityResultLauncher
     private ActivityResultLauncher<Intent> imagePickerLauncher;
-    private LatLng latLng; // Add this to your class fields
+    private LatLng latLng;
 
     private List<String> placeIdList = new ArrayList<>(); // Add this to your class fields
+
+    private String status = "Available";
 
 
     @Override
@@ -218,6 +220,7 @@ public class DonateActivity extends AppCompatActivity {
                     donationData.put("imageUrl", uri.toString());
                     donationData.put("latitude", latitude);
                     donationData.put("longitude", longitude);
+                    donationData.put("Status", status);
 
                     databaseReference.push().setValue(donationData).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

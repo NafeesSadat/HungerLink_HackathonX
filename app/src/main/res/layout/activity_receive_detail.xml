@@ -11,9 +11,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/detailName"
+        android:id="@+id/name"
         android:layout_marginTop="14dp"
-        android:text="Recipe Name"
+
         android:textSize="24sp"
         android:textColor="@color/lavender"
         android:textStyle="bold"
@@ -31,10 +31,9 @@
         <ImageView
             android:layout_width="380dp"
             android:layout_height="200dp"
-            android:id="@+id/detailImage"
+            android:id="@+id/imageUrl"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:src="@drawable/maggi"
             android:scaleType="centerCrop"/>
 
     </androidx.cardview.widget.CardView>
@@ -42,7 +41,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Duration:"
+        android:text="Food Name"
         android:textColor="@color/lavender"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
@@ -52,15 +51,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="time"
         android:layout_marginStart="10dp"
         android:textSize="16sp"
-        android:id="@+id/detailTime"/>
+        android:id="@+id/foodItems"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ingredients:"
+        android:text="Details"
         android:textColor="@color/lavender"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
@@ -70,15 +68,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/maggiIngredients"
         android:layout_marginStart="10dp"
         android:textSize="16sp"
-        android:id="@+id/detailIngredients"/>
+        android:id="@+id/phoneNumber"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Steps:"
+        android:text="Address"
         android:textColor="@color/lavender"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
@@ -88,13 +85,25 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/maggieDesc"
         android:layout_marginStart="10dp"
         android:textSize="16sp"
-        android:id="@+id/detailDesc"/>
+        android:id="@+id/address"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:id="@+id/longitude"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:id="@+id/latitude"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonRecv"
+        android:id="@+id/buttonReceive"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:text="@string/receive_btn"
