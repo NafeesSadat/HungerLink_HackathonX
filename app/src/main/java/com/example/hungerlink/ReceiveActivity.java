@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class ReceiveActivity extends AppCompatActivity {
     private Location userLocation;
 
     private String currentUserId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

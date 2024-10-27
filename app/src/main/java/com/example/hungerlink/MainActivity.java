@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cardContact.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, NearbyNGOActivity.class);
+            Intent intent = new Intent(MainActivity.this, NearbyDonationActivity.class);
             startActivity(intent);
         });
 

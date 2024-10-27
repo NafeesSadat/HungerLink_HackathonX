@@ -23,9 +23,9 @@
 //
 //public class ReceiveDetailActivity extends AppCompatActivity {
 //
-//    private TextView nameTextView, foodItemsTextView, phoneNumberTextView, addressTextView, longitudeTextView, latitudeTextView, statusTextView;
+//    private TextView nameTextView, foodItemsTextView, phoneNumberTextView, addressTextView, longitudeTextView, latitudeTextView, statusTextView, showOnMapsTextView;;
 //    private ImageView imageUrlImageView;
-//    private Button receiveButton, selectButton;
+//    private Button selectButton;
 //    private String donationId;
 //
 //    private DatabaseReference databaseReference;
@@ -43,9 +43,9 @@
 //        longitudeTextView = findViewById(R.id.longitude);
 //        latitudeTextView = findViewById(R.id.latitude);
 //        imageUrlImageView = findViewById(R.id.imageUrl);
-//        receiveButton = findViewById(R.id.buttonReceive);
 //        selectButton = findViewById(R.id.buttonSelect);
 //        statusTextView = findViewById(R.id.status);
+//        showOnMapsTextView = findViewById(R.id.showOnMapsTextView);
 //
 //        // Get the donation ID from the Intent
 //        Intent intent = getIntent();
@@ -68,8 +68,10 @@
 //
 //        // Fetch donation info from the database
 //        fetchDonationInfo();
-//    }
 //
+//        // Set OnClickListener for the select button
+//        selectButton.setOnClickListener(v -> updateDonationStatus("Pending"));
+//    }
 //
 //    private void fetchDonationInfo() {
 //        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,13 +116,58 @@
 //            }
 //        });
 //    }
+//
+//    private void updateDonationStatus(String newStatus) {
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                boolean donationFound = false; // Flag to check if donation is found
+//
+//                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+//                    for (DataSnapshot donationSnapshot : userSnapshot.getChildren()) {
+//                        if (Objects.equals(donationSnapshot.getKey(), donationId)) {
+//                            // Donation found, update the status
+//                            donationSnapshot.getRef().child("Status").setValue(newStatus)
+//                                    .addOnCompleteListener(task -> {
+//                                        if (task.isSuccessful()) {
+//                                            // Update the status TextView
+//                                            statusTextView.setText(String.format("Status: %s", newStatus));
+//                                            // Hide the select button
+//                                            selectButton.setVisibility(Button.GONE);
+//                                            Toast.makeText(ReceiveDetailActivity.this, "Status updated to Pending", Toast.LENGTH_SHORT).show();
+//                                        } else {
+//                                            Toast.makeText(ReceiveDetailActivity.this, "Failed to update status", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    });
+//                            donationFound = true; // Mark that the donation was found
+//                            break; // Exit the inner loop
+//                        }
+//                    }
+//                    if (donationFound) {
+//                        break; // Exit the outer loop if donation was found
+//                    }
+//                }
+//
+//                if (!donationFound) {
+//                    Toast.makeText(ReceiveDetailActivity.this, "Donation not found", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(ReceiveDetailActivity.this, "Failed to load donations", Toast.LENGTH_SHORT).show();
+//                Log.e("ReceiveDetailActivity", "Database error: ", error.toException());
+//            }
+//        });
+//    }
+//
 //}
-
-
+//
 
 package com.example.hungerlink;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -143,9 +190,9 @@ import java.util.Objects;
 
 public class ReceiveDetailActivity extends AppCompatActivity {
 
-    private TextView nameTextView, foodItemsTextView, phoneNumberTextView, addressTextView, longitudeTextView, latitudeTextView, statusTextView;
+    private TextView nameTextView, foodItemsTextView, phoneNumberTextView, addressTextView, longitudeTextView, latitudeTextView, statusTextView, showOnMapsTextVew;
     private ImageView imageUrlImageView;
-    private Button receiveButton, selectButton;
+    private Button selectButton;
     private String donationId;
 
     private DatabaseReference databaseReference;
@@ -163,9 +210,9 @@ public class ReceiveDetailActivity extends AppCompatActivity {
         longitudeTextView = findViewById(R.id.longitude);
         latitudeTextView = findViewById(R.id.latitude);
         imageUrlImageView = findViewById(R.id.imageUrl);
-        receiveButton = findViewById(R.id.buttonReceive);
         selectButton = findViewById(R.id.buttonSelect);
         statusTextView = findViewById(R.id.status);
+        showOnMapsTextVew = findViewById(R.id.showOnMapsTextView); // Initialize the show on maps TextView
 
         // Get the donation ID from the Intent
         Intent intent = getIntent();
@@ -176,7 +223,6 @@ public class ReceiveDetailActivity extends AppCompatActivity {
 
         if (donationId == null) {
             Log.e("ReceiveDetailActivity", "Donation ID is null!");
-            // Optionally, you can finish the activity or show a message to the user
             Toast.makeText(this, "No donation data available.", Toast.LENGTH_SHORT).show();
             finish(); // Close the activity
             return; // Exit onCreate
@@ -191,6 +237,9 @@ public class ReceiveDetailActivity extends AppCompatActivity {
 
         // Set OnClickListener for the select button
         selectButton.setOnClickListener(v -> updateDonationStatus("Pending"));
+
+        // Set OnClickListener for the show on maps TextView
+        showOnMapsTextVew.setOnClickListener(v -> showDirections());
     }
 
     private void fetchDonationInfo() {
@@ -281,5 +330,20 @@ public class ReceiveDetailActivity extends AppCompatActivity {
         });
     }
 
-}
+    private void showDirections() {
+        // Get the latitude and longitude from the respective TextViews
+        String latitude = latitudeTextView.getText().toString().replace("Latitude: ", "").trim();
+        String longitude = longitudeTextView.getText().toString().replace("Longitude: ", "").trim();
 
+        // Check if latitude and longitude are valid
+        if (!latitude.equals("N/A") && !longitude.equals("N/A")) {
+            // Create the URI for the Maps intent
+            String uri = "google.navigation:q=" + latitude + "," + longitude;
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            mapIntent.setPackage("com.google.android.apps.maps"); // Optional: set package for Google Maps
+            startActivity(mapIntent);
+        } else {
+            Toast.makeText(this, "Invalid location data.", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
