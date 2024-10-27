@@ -2,13 +2,9 @@ package com.example.hungerlink;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +36,7 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_docation_list_detail);
+        setContentView(R.layout.activity_my_donation_list_detail);
 
         // Initialize views
         nameTextView = findViewById(R.id.name);
@@ -78,7 +73,7 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
         fetchDonationInfo();
 
         // Set OnClickListener for the select button
-        completedButton.setOnClickListener(v -> updateDonationStatus("Pending"));
+        completedButton.setOnClickListener(v -> updateDonationStatus("Completed"));
     }
 
     private void fetchDonationInfo() {
@@ -112,6 +107,13 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
                             Glide.with(MyDonationListDetailActivity.this)
                                     .load(imageUrl)
                                     .into(imageUrlImageView);
+
+                            // Hide the completedButton if the status is "Completed"
+                            if ("Completed".equalsIgnoreCase(status)) {
+                                completedButton.setVisibility(Button.GONE);
+                                cancelButton.setVisibility(Button.GONE);
+                            }
+
                         }
                     }
                 }

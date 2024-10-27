@@ -191,14 +191,13 @@ public class ReceiveActivity extends AppCompatActivity {
                         String status = donationSnapshot.child("Status").getValue(String.class);
 
                         // Skip donations with "Pending" status
-                        if ("Pending".equalsIgnoreCase(status)) {
+                        if ("Pending".equalsIgnoreCase(status) || "Completed".equalsIgnoreCase(status)) {
                             continue;
                         }
                         String name = donationSnapshot.child("name").getValue(String.class);
                         String foodItems = donationSnapshot.child("foodItems").getValue(String.class);
                         String phoneNumber = donationSnapshot.child("phoneNumber").getValue(String.class);
                         String address = donationSnapshot.child("address").getValue(String.class);
-//                        String status = donationSnapshot.child("Status").getValue(String.class);
 
                         Double longitude = donationSnapshot.child("longitude").getValue(Double.class);
                         Double latitude = donationSnapshot.child("latitude").getValue(Double.class);
