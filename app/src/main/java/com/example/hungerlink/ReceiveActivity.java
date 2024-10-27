@@ -126,6 +126,7 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -133,6 +134,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ReceiveActivity extends AppCompatActivity {
     private ArrayList<DonationInfo> donationList;
@@ -140,6 +142,8 @@ public class ReceiveActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location userLocation;
+
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +157,8 @@ public class ReceiveActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference().child("Donation Information");
+
+        currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchUserLocation();  // Fetch user’s location
@@ -186,12 +192,15 @@ public class ReceiveActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 donationList.clear();
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    if (Objects.equals(userSnapshot.getKey(), currentUserId)) {
+                        continue;
+                    }
                     for (DataSnapshot donationSnapshot : userSnapshot.getChildren()) {
                         String donationId = donationSnapshot.getKey();
                         String status = donationSnapshot.child("Status").getValue(String.class);
 
                         // Skip donations with "Pending" status
-                        if ("Pending".equalsIgnoreCase(status) || "Completed".equalsIgnoreCase(status)) {
+                        if ("Pending".equalsIgnoreCase(status) || "Completed".equalsIgnoreCase(status) || "Canceled".equalsIgnoreCase(status)) {
                             continue;
                         }
                         String name = donationSnapshot.child("name").getValue(String.class);

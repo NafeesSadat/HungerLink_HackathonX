@@ -74,6 +74,7 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
 
         // Set OnClickListener for the select button
         completedButton.setOnClickListener(v -> updateDonationStatus("Completed"));
+        cancelButton.setOnClickListener(v -> updateDonationStatus("Canceled"));
     }
 
     private void fetchDonationInfo() {
@@ -112,8 +113,10 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
                             if ("Completed".equalsIgnoreCase(status)) {
                                 completedButton.setVisibility(Button.GONE);
                                 cancelButton.setVisibility(Button.GONE);
+                            } else if ("Canceled".equalsIgnoreCase(status)) {
+                                completedButton.setVisibility(Button.GONE);
+                                cancelButton.setVisibility(Button.GONE);
                             }
-
                         }
                     }
                 }
@@ -144,6 +147,7 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
                                             statusTextView.setText(String.format("Status: %s", newStatus));
                                             // Hide the select button
                                             completedButton.setVisibility(Button.GONE);
+                                            cancelButton.setVisibility(Button.GONE);
                                             Toast.makeText(MyDonationListDetailActivity.this, "Status updated to Pending", Toast.LENGTH_SHORT).show();
                                         } else {
                                             Toast.makeText(MyDonationListDetailActivity.this, "Failed to update status", Toast.LENGTH_SHORT).show();
