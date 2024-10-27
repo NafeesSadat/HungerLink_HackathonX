@@ -182,7 +182,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardshare"
+            android:id="@+id/cardhistory"
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -206,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="70dp"
-                android:text="@string/share"
+                android:text="History"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />

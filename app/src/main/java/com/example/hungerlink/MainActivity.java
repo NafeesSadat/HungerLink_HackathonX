@@ -15,7 +15,7 @@ import android.Manifest;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView cardDonate, cardReceive, cardProfile, cardDonationList, cardContact, cardShare, cardLogout;
+    CardView cardDonate, cardReceive, cardProfile, cardDonationList, cardContact, cardHistory, cardLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         cardProfile = findViewById(R.id.cardProfile);
         cardDonationList = findViewById(R.id.cardDonationList);
         cardContact = findViewById(R.id.cardContact);
-        cardShare = findViewById(R.id.cardshare);
+        cardHistory = findViewById(R.id.cardhistory);
         cardLogout = findViewById(R.id.cardLogout);
 
         // Set click listeners for each card view
@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cardContact.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ContactUsActivity.class);
+            Intent intent = new Intent(MainActivity.this, NearbyNGOActivity.class);
             startActivity(intent);
         });
 
-        cardShare.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ShareActivity.class);
+        cardHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
             startActivity(intent);
         });
 
