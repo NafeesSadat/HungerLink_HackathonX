@@ -148,6 +148,14 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
                                             // Hide the select button
                                             completedButton.setVisibility(Button.GONE);
                                             cancelButton.setVisibility(Button.GONE);
+
+                                            // Show notification
+                                            NotificationActivity.showNotification(
+                                                    MyDonationListDetailActivity.this, // Context
+                                                    "Donation Status Updated",
+                                                    "The donation status has been changed to " + newStatus
+                                            );
+
                                             Toast.makeText(MyDonationListDetailActivity.this, "Status updated to Pending", Toast.LENGTH_SHORT).show();
                                         } else {
                                             Toast.makeText(MyDonationListDetailActivity.this, "Failed to update status", Toast.LENGTH_SHORT).show();
