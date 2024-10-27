@@ -30,7 +30,6 @@
             android:layout_width="120dp"
             android:layout_height="30dp"
             android:id="@+id/listName"
-            android:text="Name"
             android:textColor="@color/lavender"
             android:textSize="20sp"
             android:layout_marginTop="25dp"
@@ -40,8 +39,7 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:id="@+id/listTime"
-            android:text="time"
+            android:id="@+id/listDistance"
             android:textSize="16sp"
             android:layout_toEndOf="@id/listName"
             android:layout_marginTop="25dp"

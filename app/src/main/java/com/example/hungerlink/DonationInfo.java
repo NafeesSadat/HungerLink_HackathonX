@@ -10,20 +10,22 @@ public class DonationInfo {
     private String address;
     private LatLng latLng;  // Use LatLng for coordinates
     private String imageUrl;
+    private String status;
 
     // Default constructor required for calls to DataSnapshot.getValue(DonationInfo.class)
     public DonationInfo() {
     }
 
     // Parameterized constructor
-    public DonationInfo(String donationId, String name, String foodItems, String phoneNumber, String address, LatLng latLng, String imageUrl) {
+    public DonationInfo(String donationId, String name, String foodItems, String phoneNumber, String address, LatLng latLng, String imageUrl, String status) {
         this.donationId = donationId;
         this.name = name;
         this.foodItems = foodItems;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.latLng = latLng;  // Set LatLng directly
+        this.latLng = latLng;
         this.imageUrl = imageUrl;
+        this.status = status;
     }
 
     // Getters
@@ -53,6 +55,10 @@ public class DonationInfo {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     // New methods to get longitude and latitude
@@ -91,5 +97,9 @@ public class DonationInfo {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
