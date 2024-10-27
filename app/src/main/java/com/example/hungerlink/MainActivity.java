@@ -7,7 +7,7 @@ import androidx.cardview.widget.CardView;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView cardDonate, cardReceive, cardProfile, cardAboutUs, cardContact, cardShare, cardLogout;
+    CardView cardDonate, cardReceive, cardProfile, cardDonationList, cardContact, cardShare, cardLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         cardDonate = findViewById(R.id.cardDonate);
         cardReceive = findViewById(R.id.cardReceive);
         cardProfile = findViewById(R.id.cardProfile);
-        cardAboutUs = findViewById(R.id.cardAboutus);
+        cardDonationList = findViewById(R.id.cardDonationList);
         cardContact = findViewById(R.id.cardContact);
         cardShare = findViewById(R.id.cardshare);
         cardLogout = findViewById(R.id.cardLogout);
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        cardAboutUs.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
+        cardDonationList.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MyDonationListActivity.class);
             startActivity(intent);
         });
 

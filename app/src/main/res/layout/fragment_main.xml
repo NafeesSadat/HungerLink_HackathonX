@@ -120,7 +120,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardAboutus"
+            android:id="@+id/cardDonationList"
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -136,7 +136,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:contentDescription="@string/aboutus_icon"
+                android:contentDescription="@string/donationlist_icon"
                 android:src="@drawable/aboutusicon" />
 
             <TextView
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="70dp"
-                android:text="@string/about_us"
+                android:text="@string/donation_list"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />

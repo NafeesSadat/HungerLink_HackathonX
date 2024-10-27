@@ -16,7 +16,7 @@
     <string name="foodmap_icon">FOOD MAP</string>
     <string name="mypin_icon">MYPIN</string>
     <string name="history_icon">HISTORY ICON</string>
-    <string name="aboutus_icon">About Us</string>
+    <string name="donationlist_icon">My Donation List</string>
     <string name="contactus_icon">Contact Us</string>
     <string name="logout_icon">LOGOUT ICON</string>
     <string name="donate">Donate</string>
@@ -24,7 +24,7 @@
     <string name="food_map">Food Map</string>
     <string name="my_pins">My Pins</string>
     <string name="share">Share</string>
-    <string name="about_us">About Us</string>
+    <string name="donation_list">My Donation List</string>
     <string name="contact_us">Contact Us</string>
     <string name="log_out">Log Out</string>
     <string name="enter_your_name">Enter Your Name</string>

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
     <application
@@ -20,13 +23,16 @@
         android:theme="@style/Theme.HungerLink"
         tools:targetApi="31">
         <activity
+            android:name=".MyDonationListDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ShareActivity"
             android:exported="false" />
         <activity
             android:name=".ContactUsActivity"
             android:exported="false" />
         <activity
-            android:name=".AboutUsActivity"
+            android:name=".MyDonationListActivity"
             android:exported="false" />
         <activity
             android:name=".NearbyNGOActivity"
@@ -36,7 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".ReceiveDetailActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".DonateActivity"
             android:exported="false" />
