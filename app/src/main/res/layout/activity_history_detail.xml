@@ -108,23 +108,6 @@
         android:textSize="16sp"
         android:id="@+id/status"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonSelect"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/rounded_button"
-        android:text="Select"
-        android:textSize="18sp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonReceive"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/rounded_button"
-        android:visibility="gone"
-        android:text="@string/receive_btn"
-        android:textSize="18sp" />
 
 </LinearLayout>

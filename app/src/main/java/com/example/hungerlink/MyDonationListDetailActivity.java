@@ -33,6 +33,8 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
+    private DatabaseReference databaseReferenceReceive;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +71,23 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("Donation Information");
 
+        // Initialize Firebase Database reference
+        databaseReferenceReceive = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("Receive Information");
+
         // Fetch donation info from the database
         fetchDonationInfo();
 
         // Set OnClickListener for the select button
-        completedButton.setOnClickListener(v -> updateDonationStatus("Completed"));
-        cancelButton.setOnClickListener(v -> updateDonationStatus("Canceled"));
+        completedButton.setOnClickListener(v -> {
+            updateDonationStatus("Completed", databaseReference);
+            updateDonationStatus("Completed", databaseReferenceReceive);
+        });
+
+        cancelButton.setOnClickListener(v -> {
+            updateDonationStatus("Canceled", databaseReference);
+            updateDonationStatus("Canceled", databaseReferenceReceive);
+        });
     }
 
     private void fetchDonationInfo() {
@@ -130,7 +143,7 @@ public class MyDonationListDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void updateDonationStatus(String newStatus) {
+    private void updateDonationStatus(String newStatus, DatabaseReference databaseReference) {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

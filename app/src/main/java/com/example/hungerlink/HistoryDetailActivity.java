@@ -2,13 +2,9 @@ package com.example.hungerlink;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -28,13 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-
 public class HistoryDetailActivity extends AppCompatActivity {
 
 
     private TextView nameTextView, foodItemsTextView, phoneNumberTextView, addressTextView, longitudeTextView, latitudeTextView, statusTextView;
     private ImageView imageUrlImageView;
-    private Button receiveButton, selectButton;
     private String donationId;
 
     private DatabaseReference databaseReference;
@@ -44,6 +37,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_detail);
 
+        Log.d("HistoryDetailActivity", "Opening HistoryDetailActivity with layout: activity_history_detail");
+
         // Initialize views
         nameTextView = findViewById(R.id.name);
         foodItemsTextView = findViewById(R.id.foodItems);
@@ -52,8 +47,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
         longitudeTextView = findViewById(R.id.longitude);
         latitudeTextView = findViewById(R.id.latitude);
         imageUrlImageView = findViewById(R.id.imageUrl);
-        receiveButton = findViewById(R.id.buttonReceive);
-        selectButton = findViewById(R.id.buttonSelect);
         statusTextView = findViewById(R.id.status);
 
         // Get the donation ID from the Intent
@@ -64,7 +57,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         Log.d("HistoryDetailActivity", "History Donation ID: " + donationId);
 
         if (donationId == null) {
-            Log.e("HistoryDetailActivity", "Donation ID is null!");
+            Log.e("HistoryDetailActivity", "History List ID is null!");
             // Optionally, you can finish the activity or show a message to the user
             Toast.makeText(this, "No donation data available.", Toast.LENGTH_SHORT).show();
             finish(); // Close the activity
@@ -73,13 +66,11 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
         // Initialize Firebase Database reference
         databaseReference = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
-                .getReference("Donation Information");
+                .getReference("Receive Information");
 
         // Fetch donation info from the database
         fetchDonationInfo();
 
-        // Set OnClickListener for the select button
-        selectButton.setOnClickListener(v -> updateDonationStatus("Pending"));
     }
 
     private void fetchDonationInfo() {
@@ -113,52 +104,9 @@ public class HistoryDetailActivity extends AppCompatActivity {
                             Glide.with(HistoryDetailActivity.this)
                                     .load(imageUrl)
                                     .into(imageUrlImageView);
+
                         }
                     }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(HistoryDetailActivity.this, "Failed to load donations", Toast.LENGTH_SHORT).show();
-                Log.e("HistoryDetailActivity", "Database error: ", error.toException());
-            }
-        });
-    }
-
-    private void updateDonationStatus(String newStatus) {
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean donationFound = false; // Flag to check if donation is found
-
-                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                    for (DataSnapshot donationSnapshot : userSnapshot.getChildren()) {
-                        if (Objects.equals(donationSnapshot.getKey(), donationId)) {
-                            // Donation found, update the status
-                            donationSnapshot.getRef().child("Status").setValue(newStatus)
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            // Update the status TextView
-                                            statusTextView.setText(String.format("Status: %s", newStatus));
-                                            // Hide the select button
-                                            selectButton.setVisibility(Button.GONE);
-                                            Toast.makeText(HistoryDetailActivity.this, "Status updated to Pending", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(HistoryDetailActivity.this, "Failed to update status", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                            donationFound = true; // Mark that the donation was found
-                            break; // Exit the inner loop
-                        }
-                    }
-                    if (donationFound) {
-                        break; // Exit the outer loop if donation was found
-                    }
-                }
-
-                if (!donationFound) {
-                    Toast.makeText(HistoryDetailActivity.this, "Donation not found", Toast.LENGTH_SHORT).show();
                 }
             }
 
