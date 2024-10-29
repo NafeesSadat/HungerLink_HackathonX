@@ -62,7 +62,6 @@ public class DonateActivity extends AppCompatActivity {
     private List<String> placeIdList = new ArrayList<>(); // Add this to your class fields
 
     private String status = "Available";
-    private String pickupAddress = "";
 
 
     @Override

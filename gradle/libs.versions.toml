@@ -20,6 +20,7 @@ placesVersion = "3.1.0"
 playServicesLocation = "21.3.0"
 playServicesLocationVersion = "21.0.1"
 playServicesPlaces = "17.1.0"
+poi = "5.2.3"
 
 [libraries]
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
@@ -42,6 +43,8 @@ places-v310 = { module = "com.google.android.libraries.places:places", version.r
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 play-services-location-v2101 = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
 play-services-places = { module = "com.google.android.gms:play-services-places", version.ref = "playServicesPlaces" }
+poi = { module = "org.apache.poi:poi", version.ref = "poi" }
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

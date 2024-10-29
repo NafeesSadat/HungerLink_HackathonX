@@ -11,6 +11,7 @@ public class DonationInfo {
     private LatLng latLng;  // Use LatLng for coordinates
     private String imageUrl;
     private String status;
+    private int streak;
 
     // Default constructor required for calls to DataSnapshot.getValue(DonationInfo.class)
     public DonationInfo() {
