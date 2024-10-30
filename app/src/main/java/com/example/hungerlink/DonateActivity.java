@@ -26,6 +26,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -226,11 +227,39 @@ public class DonateActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(DonateActivity.this, "Donation submitted successfully", Toast.LENGTH_SHORT).show();
                             clearFields();
+                            notifyAllUsers(name, foodItems, address);
                         } else {
                             Toast.makeText(DonateActivity.this, "Failed to submit donation", Toast.LENGTH_SHORT).show();
                         }
                     });
                 })).addOnFailureListener(e -> Toast.makeText(DonateActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show());
+    }
+
+    private void notifyAllUsers(String name, String foodItems, String address) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("Users");
+
+        Log.e("DonateActivity", usersRef.toString());
+
+        usersRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                for (DataSnapshot userSnapshot : task.getResult().getChildren()) {
+                    String userId = userSnapshot.getKey();
+                    Log.e("DonateActivity", userId);
+                    // Check if this user is not the current donor
+                    if (!Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        // Send notification to this user
+                        NotificationActivity.showNotification(
+                                DonateActivity.this,
+                                "New Donation Available",
+                                "A new donation is available: " + name + " has donated " + foodItems + " at " + address
+                        );
+                    }
+                }
+            } else {
+                Log.e("DonateActivity", "Failed to fetch users for notification.");
+            }
+        });
     }
 
     private void clearFields() {
