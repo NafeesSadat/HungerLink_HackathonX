@@ -31,7 +31,7 @@
             android:layout_height="30dp"
             android:id="@+id/listName"
             android:textColor="@color/lavender"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:layout_marginTop="25dp"
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@id/listImage"/>
@@ -40,7 +40,7 @@
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:id="@+id/listStatus"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:layout_toEndOf="@id/listName"
             android:layout_marginTop="25dp"
             android:layout_marginStart="100dp"

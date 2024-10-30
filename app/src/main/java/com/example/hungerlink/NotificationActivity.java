@@ -77,7 +77,7 @@ public class NotificationActivity extends AppCompatActivity {
     // Method to send a notification
     private void sendNotification(String title, String message) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.donateicon) // Your notification icon
+                .setSmallIcon(R.drawable.applogosmall) // Your notification icon
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView profileName;
+
+    private TextView profilename;
     private TextView profileEmail;
     private TextView profilePhone;
     private TextView profileAddress;
@@ -33,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Initialize UI components
         profileName = findViewById(R.id.profileNameText);
+        profilename = findViewById(R.id.profilename);
         profileEmail = findViewById(R.id.profileEmailText);
         profilePhone = findViewById(R.id.profilePhoneText);
         profileAddress = findViewById(R.id.profileAddressText);
@@ -70,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (userInfo != null) {
                         // Set the fetched user information to the TextViews
                         profileName.setText(userInfo.getName());
+                        profilename.setText(userInfo.getName());
                         profileEmail.setText(userInfo.getEmail());
                         profilePhone.setText(userInfo.getPhoneNo());
                         profileAddress.setText(userInfo.getAddress());

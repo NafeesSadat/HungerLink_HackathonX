@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MyDonationListDetailActivity">
+    tools:context=".MyDonationListDetailActivity"
+    android:background="@drawable/themeappbg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,23 +109,26 @@
         android:textSize="16sp"
         android:id="@+id/status"/>
 
-
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/buttonCompleted"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="63dp"
         android:layout_gravity="center"
-        android:background="@drawable/rounded_button"
-        android:text="Completed"
-        android:textSize="18sp" />
+        android:text="COMPLETED"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="15dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/buttonCancel"
-        android:layout_width="130dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/rounded_button"
-        android:text="Cancel"
-        android:textSize="18sp" />
+        android:text="CANCEL"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="15dp"/>
 
 </LinearLayout>

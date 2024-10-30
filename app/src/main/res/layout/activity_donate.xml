@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dashboard">
+    android:background="@drawable/themeappbg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,13 +24,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:paddingStart="24dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="24dp"
+                android:paddingRight="24dp"
+                android:paddingBottom="14dp">
 
                 <!-- Name input -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:text="@string/enter_your_namedonate"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -40,7 +45,7 @@
                     android:id="@+id/editTextName_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/custom_input"
                     android:hint="@string/your_name_donate_activity"
                     android:inputType="text"
@@ -54,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:text="@string/enter_your_food_items_donate"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -64,7 +69,7 @@
                     android:id="@+id/editTextFoodItems"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/custom_input"
                     android:hint="@string/food_items"
                     android:inputType="text"
@@ -78,7 +83,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:text="@string/enter_your_phone_number_doante"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -88,7 +93,7 @@
                     android:id="@+id/editTextPhoneNumber_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/custom_input"
                     android:hint="@string/phone_number"
                     android:inputType="phone"
@@ -102,7 +107,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:text="Donation pickup address"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -112,7 +117,7 @@
                     android:id="@+id/editTextAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/custom_input"
                     android:hint="Address"
                     android:inputType="text"
@@ -127,17 +132,17 @@
                     android:id="@+id/addressSuggestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:background="#FFFFFF"
+                    android:contentDescription="Address suggestions list"
                     android:divider="@android:color/transparent"
                     android:dividerHeight="10dp"
-                    android:background="#FFFFFF"
-                    android:contentDescription="Address suggestions list" /> <!-- Added contentDescription -->
+                    android:visibility="gone" /> <!-- Added contentDescription -->
 
                 <!-- Upload image section -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:text="Upload Donation Image"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -146,11 +151,10 @@
                 <ImageView
                     android:id="@+id/imagePreview"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="0dp"
                     android:background="@drawable/custom_input"
                     android:contentDescription="Image Preview"
-                    android:scaleType="centerCrop"
                     android:src="@drawable/baseline_file_upload_24" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -158,19 +162,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/purple"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="@color/cardview_light_background"
+                    android:minHeight="0dp"
                     android:text="Choose Image"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="12sp" />
+                <!--                android:textSize="16sp"-->
 
                 <!-- Donate button -->
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonDonate"
-                    android:layout_width="130dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/purple"
                     android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/purple"
                     android:text="@string/donate_donate_activity"
                     android:textSize="18sp" />
 
