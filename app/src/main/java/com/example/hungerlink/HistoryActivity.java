@@ -112,6 +112,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -143,12 +144,15 @@ public class HistoryActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String currentUserId;
 
+    private TextView noDataTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
         ListView listView = findViewById(R.id.listview);
+        noDataTextView = findViewById(R.id.noDataTextView);
         receiveList = new ArrayList<>();
         adapter = new HistoryAdapter(this, receiveList);
         listView.setAdapter(adapter);
@@ -202,6 +206,13 @@ public class HistoryActivity extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
+                if (receiveList.isEmpty()) {
+                    Log.d("ReceiveActivity", "No Data Available");
+                    noDataTextView.setVisibility(TextView.VISIBLE);
+
+                } else {
+                    noDataTextView.setVisibility(TextView.GONE);
+                }
             }
 
             @Override

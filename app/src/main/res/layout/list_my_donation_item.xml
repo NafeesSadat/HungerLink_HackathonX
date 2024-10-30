@@ -37,13 +37,13 @@
             android:layout_toEndOf="@id/listImage"/>
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/listStatus"
             android:textSize="16dp"
             android:layout_toEndOf="@id/listName"
             android:layout_marginTop="25dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="70dp"
             android:textColor="@color/lavender"/>
 
     </RelativeLayout>

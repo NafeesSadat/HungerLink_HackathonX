@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,8 @@ public class MyDonationListActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String currentUserId;
 
+    private TextView noDataTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class MyDonationListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_donation_list);
 
         ListView listView = findViewById(R.id.listview);
+        noDataTextView = findViewById(R.id.noDataTextView);
         donationList = new ArrayList<>();
         adapter = new MyDonationAdapter(this, donationList);
         listView.setAdapter(adapter);
@@ -87,6 +91,14 @@ public class MyDonationListActivity extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
+
+                if (donationList.isEmpty()) {
+                    Log.d("ReceiveActivity", "No Data Available");
+                    noDataTextView.setVisibility(TextView.VISIBLE);
+
+                } else {
+                    noDataTextView.setVisibility(TextView.GONE);
+                }
             }
 
             @Override
