@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,6 +31,8 @@ public class DonorSignUpActivity extends AppCompatActivity {
     private EditText address;
     private FirebaseAuth auth;
 
+    private TextView loginRedirectText;
+
     String txt_email, txt_password, txt_confirmPassword, txt_name, txt_phoneNo, txt_address;
 
     @Override
@@ -46,6 +49,7 @@ public class DonorSignUpActivity extends AppCompatActivity {
         address = findViewById(R.id.address);
         auth = FirebaseAuth.getInstance();
         signUp = findViewById(R.id.signup_button);
+        loginRedirectText = findViewById(R.id.loginRedirectText);
 
         // Set the sign-up button listener
         signUp.setOnClickListener(view -> {
@@ -99,6 +103,11 @@ public class DonorSignUpActivity extends AppCompatActivity {
                     signUpUser(txt_email, txt_password);
                 }
             }
+        });
+
+        loginRedirectText.setOnClickListener(view -> {
+            startActivity(new Intent(DonorSignUpActivity.this, LoginActivity.class));
+            finish(); // Optionally close the current activity
         });
     }
 
@@ -160,5 +169,9 @@ public class DonorSignUpActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 
 }

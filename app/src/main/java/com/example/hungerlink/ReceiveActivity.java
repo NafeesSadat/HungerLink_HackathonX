@@ -36,11 +36,14 @@ public class ReceiveActivity extends AppCompatActivity {
 
     private String currentUserId;
 
+    private TextView noDataTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive);
+        noDataTextView = findViewById(R.id.noDataTextView);
 
         ListView listView = findViewById(R.id.listview);
         donationList = new ArrayList<>();
@@ -117,6 +120,19 @@ public class ReceiveActivity extends AppCompatActivity {
                 }
                 adapter.setUserLocation(userLocation);  // Set user location in the adapter
                 adapter.notifyDataSetChanged();
+
+
+
+                Log.d("ReceiveActivity", "Donation List Size: " + donationList.size());
+
+                // Toggle the visibility of the no data text view
+                if (donationList.isEmpty()) {
+                    Log.d("ReceiveActivity", "No Data Available");
+                    noDataTextView.setVisibility(TextView.VISIBLE);
+
+                } else {
+                    noDataTextView.setVisibility(TextView.GONE);
+                }
             }
 
             @Override
