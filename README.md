@@ -97,20 +97,43 @@ dependencies {
 ## Usage
 
 1. **User Registration/Login**
-      **User Login**
-      - Users can register or log in to the app using Firebase Authentication.
-      - ![WhatsApp Image 2024-10-31 at 18 26 35_0bdd113d](https://github.com/user-attachments/assets/cd13b45d-e401-4bac-a237-e94d0e1fe7d7)
+      - **User Login**
+         - Users can register or log in to the app using Firebase Authentication.
+           ![WhatsApp Image 2024-10-31 at 18 26 35_0bdd113d](https://github.com/user-attachments/assets/cd13b45d-e401-4bac-a237-e94d0e1fe7d7)
+        
+         - **User Registration**
+           ![WhatsApp Image 2024-10-31 at 18 26 35_763eca71](https://github.com/user-attachments/assets/24a65b72-8155-4bfd-84f6-a38ce8bd2aed)
+
 
 
 3. **Donation Management**
    - Donors can easily schedule a donation through the app.
-   - NGOs can accept and manage incoming donations via the dashboard.
+     ![WhatsApp Image 2024-10-31 at 18 26 37_b78072b9](https://github.com/user-attachments/assets/a85857ef-7e14-4bb6-bccf-8ddd4dedbff5)
+     ![WhatsApp Image 2024-10-31 at 18 26 37_bafb68a6](https://github.com/user-attachments/assets/b8968bce-c6dc-43b0-82f3-4ddd47892016)
+
+   - NGOs, Food Banks or individuals in need can view, accept and manage incoming donations via the dashboard.
+     ![WhatsApp Image 2024-10-31 at 21 58 19_544b6a0e](https://github.com/user-attachments/assets/ccd8dfcb-ebb8-4e55-87da-72cc8b666403)
+     ![WhatsApp Image 2024-10-31 at 18 26 38_0520dfdd](https://github.com/user-attachments/assets/868e7925-9fa4-4d84-862c-462b966d9847)
+
+     
 
 4. **Finding Resources**
    - Users can search for nearby food resources based on their location.
+     ![WhatsApp Image 2024-10-31 at 22 01 55_df8c98b8](https://github.com/user-attachments/assets/4e9e39b4-76ef-4b37-8aec-7ee5d7a75619)
+
 
 5. **View Donation Status**
    - Donors can track the status of their donations and see where their contributions are making an impact.
+     ![WhatsApp Image 2024-10-31 at 22 03 12_51cf12f9](https://github.com/user-attachments/assets/56f1194d-0c41-4974-9566-0ecf163af1b9)
+     ![WhatsApp Image 2024-10-31 at 18 26 37_30f2dc7b](https://github.com/user-attachments/assets/1b1d249e-eade-491c-bf51-a2057b9d277c)
+
+6. **View Recieve History with Advanced Analytics**
+   - Reciever can check their donation status, keep track of it with an option to export their recieve history data to do advanced data analytics.
+     ![WhatsApp Image 2024-10-31 at 22 08 37_93955b7b](https://github.com/user-attachments/assets/71440cc8-a3e1-4f94-a32b-d8b99ddc3f60)
+     ![WhatsApp Image 2024-10-31 at 22 08 38_03e6ab08](https://github.com/user-attachments/assets/ab65912b-c35c-49dc-ba83-8b203431cf1c)
+
+
+     
 
 ## License
 
