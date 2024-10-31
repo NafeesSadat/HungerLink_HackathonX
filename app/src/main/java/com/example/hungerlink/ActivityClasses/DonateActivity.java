@@ -90,7 +90,7 @@ public class DonateActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("donation_images");
 
         // Initialize Places API with the application's context
-        Places.initialize(getApplicationContext(), "AIzaSyDRB6n2ZMOZApWSGUnUr91QTvdXbIIFn1I"); // Replace with actual API key
+        Places.initialize(getApplicationContext(), "AIzaSyDRB6n2ZMOZApWSGUnUr91QTvdXbIIFn1I");
         placesClient = Places.createClient(this);
 
         // Register activity result launcher for image selection
