@@ -101,7 +101,7 @@ dependencies {
       - **User Login**
          - Users can register or log in to the app using Firebase Authentication.
            ## User Login
-            <img src="https://github.com/user-attachments/assets/cd13b45d-e401-4bac-a237-e94d0e1fe7d7" alt="User Login" width="300"/>
+            <img src="https://github.com/user-attachments/assets/cd13b45d-e401-4bac-a237-e94d0e1fe7d7" alt="User Login" width="200"/>
 
         
          - **User Registration**
