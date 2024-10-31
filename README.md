@@ -101,11 +101,12 @@ dependencies {
       - **User Login**
          - Users can register or log in to the app using Firebase Authentication.
             <img src="https://github.com/user-attachments/assets/cd13b45d-e401-4bac-a237-e94d0e1fe7d7" alt="User Login" width="200"/>
+            <br>
 
         
       - **User Registration**
            <img src="https://github.com/user-attachments/assets/24a65b72-8155-4bfd-84f6-a38ce8bd2aed" alt="User Registration" width="200"/>
-
+           <br>
 
 3. **Donation Management**
    - Donors can easily schedule a donation through the app.
