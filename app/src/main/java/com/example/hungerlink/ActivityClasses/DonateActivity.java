@@ -40,37 +40,40 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DonateActivity extends AppCompatActivity {
-    private static final int REQUEST_LOCATION_PERMISSION = 100;
+    private static final int REQUEST_LOCATION_PERMISSION = 100; // Request code for location permission
 
+    // UI components
     private EditText editTextName, editTextFoodItems, editTextPhoneNumber;
     private AutoCompleteTextView editTextAddress;
     private ImageView imagePreview;
-    private Uri imageUri;
+    private Uri imageUri; // URI to store the selected image
+    private ListView addressSuggestions;
+
+    // Firebase references
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
     private String userId;
 
-    private ListView addressSuggestions;
+    // Address suggestions list and adapter
     private ArrayAdapter<String> suggestionsAdapter;
     private List<String> addressList;
-    private PlacesClient placesClient;
-    private String selectedPlaceId; // Store the selected place ID for fetching details
+    private PlacesClient placesClient; // Google Places client for fetching location data
+    private String selectedPlaceId; // ID of the selected place for further details
 
-    // Declare the ActivityResultLauncher
+    // Image picker launcher
     private ActivityResultLauncher<Intent> imagePickerLauncher;
+
+    // Store the coordinates of the selected location
     private LatLng latLng;
-
-    private List<String> placeIdList = new ArrayList<>(); // Add this to your class fields
-
-    private String status = "Available";
-
+    private List<String> placeIdList = new ArrayList<>(); // List to store Place IDs for suggestions
+    private String status = "Available"; // Default status for donations
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate);
 
-        // Initialize Views
+        // Initialize UI components
         editTextName = findViewById(R.id.editTextName_d);
         editTextFoodItems = findViewById(R.id.editTextFoodItems);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber_d);
@@ -80,68 +83,73 @@ public class DonateActivity extends AppCompatActivity {
         Button buttonUploadImage = findViewById(R.id.buttonUploadImage);
         addressSuggestions = findViewById(R.id.addressSuggestions);
 
-        // Firebase references
+        // Setup Firebase references
         userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         databaseReference = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference().child("Donation Information").child(userId);
         storageReference = FirebaseStorage.getInstance().getReference("donation_images");
 
-        // Initialize Places SDK
-        Places.initialize(getApplicationContext(), "AIzaSyDRB6n2ZMOZApWSGUnUr91QTvdXbIIFn1I"); // Replace with your API key
+        // Initialize Places API with the application's context
+        Places.initialize(getApplicationContext(), "AIzaSyDRB6n2ZMOZApWSGUnUr91QTvdXbIIFn1I"); // Replace with actual API key
         placesClient = Places.createClient(this);
 
-        // Initialize ActivityResultLauncher for image picking
+        // Register activity result launcher for image selection
         imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
-                imageUri = result.getData().getData();
+                imageUri = result.getData().getData(); // Store image URI
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(imageUri);
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    imagePreview.setImageBitmap(bitmap);
+                    imagePreview.setImageBitmap(bitmap); // Display selected image
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        // Address suggestions
+        // Initialize address suggestions list and adapter
         addressList = new ArrayList<>();
         suggestionsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, addressList);
         addressSuggestions.setAdapter(suggestionsAdapter);
-        addressSuggestions.setVisibility(View.GONE);
+        addressSuggestions.setVisibility(View.GONE); // Initially hide the suggestions list
 
+        // Set up listener for address input to fetch suggestions
         editTextAddress.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                fetchAddressSuggestions(charSequence.toString());
+                fetchAddressSuggestions(charSequence.toString()); // Fetch suggestions as user types
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
+            public void afterTextChanged(Editable editable) {}
         });
 
+        // Handle address suggestion click
         addressSuggestions.setOnItemClickListener((adapterView, view, i, l) -> {
-            String selectedAddress = suggestionsAdapter.getItem(i);
+            String selectedAddress = suggestionsAdapter.getItem(i); // Get selected suggestion
             editTextAddress.setText(selectedAddress);
-            addressSuggestions.setVisibility(View.GONE);
+            addressSuggestions.setVisibility(View.GONE); // Hide suggestions list
 
-            // Get the corresponding placeId from the list based on index
+            // Fetch place details for the selected address
             String selectedPlaceId = placeIdList.get(i);
-            fetchPlaceDetails(selectedPlaceId); // Fetch place details using the selected place ID
+            fetchPlaceDetails(selectedPlaceId);
         });
 
-        buttonUploadImage.setOnClickListener(v -> openImageChooser());
-        buttonDonate.setOnClickListener(v -> submitDonation());
+        // Set up button listeners
+        buttonUploadImage.setOnClickListener(v -> openImageChooser()); // Opens image chooser
+        buttonDonate.setOnClickListener(v -> submitDonation()); // Submits donation
     }
 
+    // Opens the image picker to select an image
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        imagePickerLauncher.launch(intent); // Use the launcher to start the intent
+        imagePickerLauncher.launch(intent); // Start image picker intent
     }
 
+    // Fetch address suggestions based on user input
     private void fetchAddressSuggestions(String query) {
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
         FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
@@ -151,38 +159,34 @@ public class DonateActivity extends AppCompatActivity {
 
         placesClient.findAutocompletePredictions(request)
                 .addOnSuccessListener(response -> {
-                    addressList.clear();
-                    placeIdList.clear(); // Clear old place IDs
+                    addressList.clear(); // Clear previous suggestions
+                    placeIdList.clear(); // Clear previous Place IDs
                     for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
-                        addressList.add(prediction.getFullText(null).toString());
-                        placeIdList.add(prediction.getPlaceId()); // Save the place ID to a list
+                        addressList.add(prediction.getFullText(null).toString()); // Add suggestion text
+                        placeIdList.add(prediction.getPlaceId()); // Add corresponding Place ID
                     }
                     suggestionsAdapter.notifyDataSetChanged();
-                    addressSuggestions.setVisibility(View.VISIBLE);
+                    addressSuggestions.setVisibility(View.VISIBLE); // Show suggestions list
                 })
                 .addOnFailureListener(exception -> Log.e("PlacesAPI", "Error fetching address suggestions", exception));
     }
 
+    // Fetch details for a specific place based on its ID
     private void fetchPlaceDetails(String placeId) {
         FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, List.of(Place.Field.LAT_LNG, Place.Field.ADDRESS));
         placesClient.fetchPlace(request)
                 .addOnSuccessListener(response -> {
                     selectedPlaceId = placeId; // Store selected place ID
-                    Log.d("PlacesAPI", "Selected place ID: " + selectedPlaceId); // Log the selected place ID
-
-                    // Directly get the LatLng from the response
-                    latLng = response.getPlace().getLatLng(); // Save it to the class variable
+                    latLng = response.getPlace().getLatLng(); // Retrieve LatLng coordinates
 
                     if (latLng != null) {
                         Log.d("PlacesAPI", "Latitude: " + latLng.latitude + ", Longitude: " + latLng.longitude);
                     }
                 })
-                .addOnFailureListener(exception -> {
-                    Log.e("PlacesAPI", "Error fetching place details", exception);
-                });
+                .addOnFailureListener(exception -> Log.e("PlacesAPI", "Error fetching place details", exception));
     }
 
-
+    // Submit donation with input validation
     private void submitDonation() {
         final String name = editTextName.getText().toString().trim();
         final String foodItems = editTextFoodItems.getText().toString().trim();
@@ -194,305 +198,58 @@ public class DonateActivity extends AppCompatActivity {
             return;
         }
 
-        // Check if selectedPlaceId is set and use the latLng already fetched in fetchPlaceDetails()
-        if (selectedPlaceId != null) {
-            // If you already have latLng saved in an instance variable from fetchPlaceDetails()
-            if (latLng != null) {
-                // Save donation data with the stored latLng
-                saveDonationData(name, foodItems, phoneNumber, address, latLng.latitude, latLng.longitude);
-            } else {
-                Toast.makeText(DonateActivity.this, "Failed to retrieve location data. Please try again.", Toast.LENGTH_SHORT).show();
-            }
+        // Check if selectedPlaceId is valid and latLng is already fetched
+        if (selectedPlaceId != null && latLng != null) {
+            saveDonationData(name, foodItems, phoneNumber, address, latLng.latitude, latLng.longitude); // Save with latLng data
         } else {
-            Toast.makeText(this, "Please select an address", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DonateActivity.this, "Please select an address", Toast.LENGTH_SHORT).show();
         }
     }
 
+    // Save donation details to Firebase
     private void saveDonationData(String name, String foodItems, String phoneNumber, String address, double latitude, double longitude) {
         final StorageReference fileReference = storageReference.child(userId + "/" + System.currentTimeMillis() + ".jpg");
         fileReference.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
-                fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                    Map<String, Object> donationData = new HashMap<>();
-                    donationData.put("name", name);
-                    donationData.put("foodItems", foodItems);
-                    donationData.put("phoneNumber", phoneNumber);
-                    donationData.put("address", address);
-                    donationData.put("imageUrl", uri.toString());
-                    donationData.put("latitude", latitude);
-                    donationData.put("longitude", longitude);
-                    donationData.put("Status", status);
+                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                            Map<String, Object> donationData = new HashMap<>();
+                            donationData.put("name", name);
+                            donationData.put("foodItems", foodItems);
+                            donationData.put("phoneNumber", phoneNumber);
+                            donationData.put("address", address);
+                            donationData.put("imageUrl", uri.toString());
+                            donationData.put("latitude", latitude);
+                            donationData.put("longitude", longitude);
+                            donationData.put("Status", status);
 
-                    databaseReference.push().setValue(donationData).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(DonateActivity.this, "Donation submitted successfully", Toast.LENGTH_SHORT).show();
-                            clearFields();
-                        } else {
-                            Toast.makeText(DonateActivity.this, "Failed to submit donation", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                })).addOnFailureListener(e -> Toast.makeText(DonateActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show());
+                            databaseReference.push().setValue(donationData)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(DonateActivity.this, "Donation submitted successfully", Toast.LENGTH_SHORT).show();
+                                            clearFields();
+                                            finish(); // Close activity on success
+                                        } else {
+                                            Toast.makeText(DonateActivity.this, "Error submitting donation", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }))
+                .addOnFailureListener(e -> Toast.makeText(DonateActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show());
     }
 
     private void clearFields() {
+        // Clear text fields by setting empty strings
         editTextName.setText("");
         editTextFoodItems.setText("");
         editTextPhoneNumber.setText("");
         editTextAddress.setText("");
-        imagePreview.setImageResource(0); // Clear the image preview
-        imageUri = null; // Reset image URI
-        addressSuggestions.setVisibility(View.GONE); // Hide address suggestions
+
+        // Clear the image preview by setting a null resource
+        imagePreview.setImageResource(0);
+
+        // Reset the image URI to null to clear the selected image data
+        imageUri = null;
+
+        // Hide the address suggestions dropdown after submission
+        addressSuggestions.setVisibility(View.GONE);
     }
+
 }
-
-
-
-//package com.example.hungerlink.ActivityClasses;
-//
-//import android.app.Activity;
-//import android.content.Intent;
-//import android.graphics.Bitmap;
-//import android.graphics.BitmapFactory;
-//import android.net.Uri;
-//import android.os.Bundle;
-//import android.provider.MediaStore;
-//import android.text.Editable;
-//import android.text.TextWatcher;
-//import android.util.Log;
-//import android.view.View;
-//import android.widget.*;
-//
-//import androidx.activity.result.ActivityResultLauncher;
-//import androidx.activity.result.contract.ActivityResultContracts;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import com.example.hungerlink.R;
-//import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.libraries.places.api.Places;
-//import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
-//import com.google.android.libraries.places.api.model.AutocompletePrediction;
-//import com.google.android.libraries.places.api.model.Place;
-//import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
-//import com.google.android.libraries.places.api.net.PlacesClient;
-//import com.google.android.libraries.places.api.net.FetchPlaceRequest;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.storage.FirebaseStorage;
-//import com.google.firebase.storage.StorageReference;
-//
-//import java.io.InputStream;
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Objects;
-//
-//public class DonateActivity extends AppCompatActivity {
-//    private static final int REQUEST_LOCATION_PERMISSION = 100;
-//
-//    // Declare UI elements
-//    private EditText editTextName, editTextFoodItems, editTextPhoneNumber;
-//    private AutoCompleteTextView editTextAddress;
-//    private ImageView imagePreview;
-//    private Uri imageUri; // Holds the URI of the selected image
-//    private DatabaseReference databaseReference; // Reference to Firebase Database
-//    private StorageReference storageReference; // Reference to Firebase Storage
-//    private String userId; // User ID of the currently logged-in user
-//
-//    private ListView addressSuggestions;
-//    private ArrayAdapter<String> suggestionsAdapter;
-//    private List<String> addressList;
-//    private PlacesClient placesClient; // Google Places client
-//    private String selectedPlaceId; // Holds the ID of the selected place for detailed info
-//
-//    // Declare the ActivityResultLauncher for image picking
-//    private ActivityResultLauncher<Intent> imagePickerLauncher;
-//    private LatLng latLng; // Holds latitude and longitude data of the selected address
-//
-//    private List<String> placeIdList = new ArrayList<>(); // List of place IDs for address suggestions
-//
-//    private String status = "Available"; // Default donation status
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_donate);
-//
-//        // Initialize views by finding them in the layout
-//        editTextName = findViewById(R.id.editTextName_d);
-//        editTextFoodItems = findViewById(R.id.editTextFoodItems);
-//        editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber_d);
-//        editTextAddress = findViewById(R.id.editTextAddress);
-//        imagePreview = findViewById(R.id.imagePreview);
-//        Button buttonDonate = findViewById(R.id.buttonDonate);
-//        Button buttonUploadImage = findViewById(R.id.buttonUploadImage);
-//        addressSuggestions = findViewById(R.id.addressSuggestions);
-//
-//        // Firebase initialization
-//        try {
-//            userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-//            databaseReference = FirebaseDatabase.getInstance("https://hunger-link-default-rtdb.asia-southeast1.firebasedatabase.app")
-//                    .getReference().child("Donation Information").child(userId);
-//            storageReference = FirebaseStorage.getInstance().getReference("donation_images");
-//        } catch (Exception e) {
-//            Toast.makeText(this, "Error initializing Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // Initialize Places SDK for address suggestions
-//        Places.initialize(getApplicationContext(), "AIzaSyDRB6n2ZMOZApWSGUnUr91QTvdXbIIFn1I"); // API key
-//        placesClient = Places.createClient(this);
-//
-//        // Set up image picker launcher to handle image selection
-//        imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-//            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
-//                imageUri = result.getData().getData();
-//                try {
-//                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
-//                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-//                    imagePreview.setImageBitmap(bitmap); // Display the selected image
-//                } catch (Exception e) {
-//                    Toast.makeText(this, "Error displaying image", Toast.LENGTH_SHORT).show();
-//                    Log.e("ImagePicker", "Error displaying image", e);
-//                }
-//            }
-//        });
-//
-//        // Setup for address suggestions using Google Places API
-//        addressList = new ArrayList<>();
-//        suggestionsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, addressList);
-//        addressSuggestions.setAdapter(suggestionsAdapter);
-//        addressSuggestions.setVisibility(View.GONE); // Initially hide suggestions
-//
-//        // Listener to fetch address suggestions as user types
-//        editTextAddress.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                fetchAddressSuggestions(charSequence.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) { }
-//        });
-//
-//        // Handle address selection from suggestion list
-//        addressSuggestions.setOnItemClickListener((adapterView, view, i, l) -> {
-//            String selectedAddress = suggestionsAdapter.getItem(i);
-//            editTextAddress.setText(selectedAddress);
-//            addressSuggestions.setVisibility(View.GONE);
-//
-//            // Fetch detailed location data using place ID
-//            String selectedPlaceId = placeIdList.get(i);
-//            fetchPlaceDetails(selectedPlaceId);
-//        });
-//
-//        // Set onClick listener for image upload button
-//        buttonUploadImage.setOnClickListener(v -> openImageChooser());
-//
-//        // Set onClick listener for donation submission
-//        buttonDonate.setOnClickListener(v -> submitDonation());
-//    }
-//
-//    // Launches an intent to select an image from gallery
-//    private void openImageChooser() {
-//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        imagePickerLauncher.launch(intent);
-//    }
-//
-//    // Fetches address suggestions based on user input using Google Places API
-//    private void fetchAddressSuggestions(String query) {
-//        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
-//        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-//                .setQuery(query)
-//                .setSessionToken(token)
-//                .build();
-//
-//        placesClient.findAutocompletePredictions(request)
-//                .addOnSuccessListener(response -> {
-//                    addressList.clear();
-//                    placeIdList.clear(); // Clear old place IDs
-//                    for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
-//                        addressList.add(prediction.getFullText(null).toString());
-//                        placeIdList.add(prediction.getPlaceId()); // Store the place ID
-//                    }
-//                    suggestionsAdapter.notifyDataSetChanged();
-//                    addressSuggestions.setVisibility(View.VISIBLE); // Show suggestions
-//                })
-//                .addOnFailureListener(exception -> {
-//                    Toast.makeText(this, "Failed to fetch address suggestions", Toast.LENGTH_SHORT).show();
-//                    Log.e("PlacesAPI", "Error fetching address suggestions", exception);
-//                });
-//    }
-//
-//    // Fetches details (latitude, longitude) of a selected place ID
-//    private void fetchPlaceDetails(String placeId) {
-//        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, List.of(Place.Field.LAT_LNG, Place.Field.ADDRESS));
-//        placesClient.fetchPlace(request)
-//                .addOnSuccessListener(response -> {
-//                    selectedPlaceId = placeId; // Store the selected place ID
-//                    latLng = response.getPlace().getLatLng(); // Store latitude and longitude
-//
-//                    if (latLng != null) {
-//                        Log.d("PlacesAPI", "Latitude: " + latLng.latitude + ", Longitude: " + latLng.longitude);
-//                    }
-//                })
-//                .addOnFailureListener(exception -> {
-//                    Toast.makeText(this, "Failed to fetch place details", Toast.LENGTH_SHORT).show();
-//                    Log.e("PlacesAPI", "Error fetching place details", exception);
-//                });
-//    }
-//
-//    // Validates user input and initiates donation submission
-//    private void submitDonation() {
-//        final String name = editTextName.getText().toString().trim();
-//        final String foodItems = editTextFoodItems.getText().toString().trim();
-//        final String phoneNumber = editTextPhoneNumber.getText().toString().trim();
-//        final String address = editTextAddress.getText().toString().trim();
-//
-//        // Check that all required fields are filled and an image is selected
-//        if (name.isEmpty() || foodItems.isEmpty() || phoneNumber.isEmpty() || address.isEmpty() || imageUri == null) {
-//            Toast.makeText(this, "Please fill all fields and upload an image", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // Verify if a location was selected and latLng data is available
-//        if (selectedPlaceId != null) {
-//            if (latLng != null) {
-//                saveDonationData(name, foodItems, phoneNumber, address, latLng.latitude, latLng.longitude);
-//            } else {
-//                Toast.makeText(this, "Location data is not available for the selected address", Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            Toast.makeText(this, "Please select a valid address from suggestions", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    // Saves the donation data to Firebase Database and uploads the image to Firebase Storage
-//    private void saveDonationData(String name, String foodItems, String phoneNumber, String address, double latitude, double longitude) {
-//        StorageReference imageRef = storageReference.child(System.currentTimeMillis() + ".jpg");
-//
-//        // Upload image to Firebase Storage
-//        imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl()
-//                        .addOnSuccessListener(uri -> {
-//                            // Prepare donation data map to upload to Firebase Database
-//                            Map<String, Object> donationData = new HashMap<>();
-//                            donationData.put("name", name);
-//                            donationData.put("foodItems", foodItems);
-//                            donationData.put("phoneNumber", phoneNumber);
-//                            donationData.put("address", address);
-//                            donationData.put("latitude", latitude);
-//                            donationData.put("longitude", longitude);
-//                            donationData.put("imageUri", uri.toString());
-//                            donationData.put("status", status);
-//
-//                            databaseReference.push().setValue(donationData)
-//                                    .addOnSuccessListener(aVoid -> Toast.makeText(this, "Donation submitted successfully", Toast.LENGTH_SHORT).show())
-//                                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to submit donation", Toast.LENGTH_SHORT).show());
-//                        })
-//                        .addOnFailureListener(e -> Toast.makeText(this, "Failed to get image URL", Toast.LENGTH_SHORT).show()))
-//                .addOnFailureListener(e -> Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show());
-//    }
-//}
