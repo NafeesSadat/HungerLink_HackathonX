@@ -8,7 +8,7 @@
     android:background="@drawable/themeappbg"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ActivityClasses.MainActivity">
 
     <TextView
         android:id="@+id/tvDashboardTitle"

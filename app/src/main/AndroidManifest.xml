@@ -43,46 +43,47 @@
         </provider>
 
         <activity
-            android:name=".HistoryDetailActivity"
+            android:name=".ActivityClasses.HistoryDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".HistoryActivity"
+            android:name=".ActivityClasses.HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".MyDonationListDetailActivity"
+            android:name=".ActivityClasses.MyDonationListDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ActivityClasses.MyDonationListActivity"
             android:exported="false" />
         <activity
-            android:name=".ShareActivity"
+            android:name=".ActivityClasses.NearbyDonationActivity"
             android:exported="false" />
         <activity
-            android:name=".ContactUsActivity"
+            android:name=".ActivityClasses.ReceiveActivity"
             android:exported="false" />
         <activity
-            android:name=".MyDonationListActivity"
+            android:name=".ActivityClasses.ReceiveDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".NearbyDonationActivity"
+            android:name=".ActivityClasses.DonateActivity"
             android:exported="false" />
         <activity
-            android:name=".ReceiveActivity"
+            android:name=".ActivityClasses.DonorSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ReceiveDetailActivity"
+            android:name=".ActivityClasses.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".DonateActivity"
+            android:name=".ActivityClasses.NotificationActivity"
             android:exported="false" />
+
         <activity
-            android:name=".DonorSignUpActivity"
-            android:exported="false" />
+            android:name=".ActivityClasses.ForgotPasswordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HungerLink"/>
+
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
+            android:name=".ActivityClasses.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,7 +92,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ActivityClasses.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.HungerLink">
             <intent-filter>
