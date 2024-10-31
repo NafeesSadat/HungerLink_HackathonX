@@ -12,6 +12,7 @@ HungerLink is a mobile application designed to connect food donors with food ban
 - [Setup Instructions](#setup-instructions)
 - [Dependencies](#dependencies)
 - [Usage](#usage)
+- [Download](#download)
 - [License](#license)
 
 ## Features
@@ -133,6 +134,9 @@ dependencies {
      ![WhatsApp Image 2024-10-31 at 22 08 38_03e6ab08](https://github.com/user-attachments/assets/ab65912b-c35c-49dc-ba83-8b203431cf1c)
 
 
+## Download
+
+You can download the APK for HungerLink from the latest release here: [HungerLink Version 1.0.0](https://github.com/NafeesSadat/HungerLink_HackathonX/releases/tag/HungerLinkv1.0.0).
      
 
 ## License
