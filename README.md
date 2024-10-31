@@ -97,16 +97,19 @@ dependencies {
 ## Usage
 
 1. **User Registration/Login**
-   - Users can register or log in to the app using Firebase Authentication.
+      **User Login**
+      - Users can register or log in to the app using Firebase Authentication.
+      - ![WhatsApp Image 2024-10-31 at 18 26 35_0bdd113d](https://github.com/user-attachments/assets/cd13b45d-e401-4bac-a237-e94d0e1fe7d7)
 
-2. **Donation Management**
+
+3. **Donation Management**
    - Donors can easily schedule a donation through the app.
    - NGOs can accept and manage incoming donations via the dashboard.
 
-3. **Finding Resources**
+4. **Finding Resources**
    - Users can search for nearby food resources based on their location.
 
-4. **View Donation Status**
+5. **View Donation Status**
    - Donors can track the status of their donations and see where their contributions are making an impact.
 
 ## License
